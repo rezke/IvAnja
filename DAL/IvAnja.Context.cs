@@ -12,7 +12,8 @@ namespace DAL
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+    using Domain;
+
     public partial class IvAnjaEntities : DbContext
     {
         public IvAnjaEntities()
