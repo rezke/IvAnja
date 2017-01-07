@@ -95,6 +95,10 @@
       <Project>{7925d354-5bfb-4026-92c6-50b68835fdcd}</Project>
       <Name>DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{3b8da03c-b114-432f-80b0-17e3798c06d9}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
