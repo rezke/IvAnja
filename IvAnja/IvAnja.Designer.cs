@@ -39,6 +39,7 @@
             this.txtQuantity = new System.Windows.Forms.TextBox();
             this.btnDelete = new System.Windows.Forms.Button();
             this.brnEdit = new System.Windows.Forms.Button();
+            this.brnOpenProducts = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblName
@@ -138,11 +139,22 @@
             this.brnEdit.UseVisualStyleBackColor = true;
             this.brnEdit.Click += new System.EventHandler(this.brnEdit_Click);
             // 
+            // brnOpenProducts
+            // 
+            this.brnOpenProducts.Location = new System.Drawing.Point(432, 229);
+            this.brnOpenProducts.Name = "brnOpenProducts";
+            this.brnOpenProducts.Size = new System.Drawing.Size(75, 23);
+            this.brnOpenProducts.TabIndex = 11;
+            this.brnOpenProducts.Text = "Products";
+            this.brnOpenProducts.UseVisualStyleBackColor = true;
+            this.brnOpenProducts.Click += new System.EventHandler(this.brnOpenProducts_Click);
+            // 
             // IvAnja
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(797, 360);
+            this.Controls.Add(this.brnOpenProducts);
             this.Controls.Add(this.brnEdit);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.txtQuantity);
@@ -174,6 +186,7 @@
         private System.Windows.Forms.TextBox txtQuantity;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button brnEdit;
+        private System.Windows.Forms.Button brnOpenProducts;
     }
 }
 

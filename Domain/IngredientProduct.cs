@@ -12,18 +12,13 @@ namespace Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class Ingredient
+    public partial class IngredientProduct
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Ingredient()
-        {
-            this.IngredientProducts = new HashSet<IngredientProduct>();
-        }
-    
         public int Id { get; set; }
-        public string Name { get; set; }
+        public int IngredientId { get; set; }
+        public int Quantity { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IngredientProduct> IngredientProducts { get; set; }
+        public virtual Ingredient Ingredient { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

@@ -43,9 +43,15 @@
     <Compile Include="Ingredient.cs">
       <DependentUpon>IvAnja.tt</DependentUpon>
     </Compile>
+    <Compile Include="IngredientProduct.cs">
+      <DependentUpon>IvAnja.tt</DependentUpon>
+    </Compile>
     <Compile Include="IvAnja.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>IvAnja.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Product.cs">
       <DependentUpon>IvAnja.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

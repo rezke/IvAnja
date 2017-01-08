@@ -7,6 +7,16 @@
     <Schema Namespace="IvAnjaModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="IvAnjaModelStoreContainer">
     <EntitySet Name="Ingredients" EntityType="IvAnjaModel.Store.Ingredients" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Products" EntityType="IvAnjaModel.Store.Products" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="IngredientProducts" EntityType="IvAnjaModel.Store.IngredientProducts" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="IngredientIngredientProduct" Association="IvAnjaModel.Store.IngredientIngredientProduct">
+      <End Role="Ingredient" EntitySet="Ingredients" />
+      <End Role="IngredientProduct" EntitySet="IngredientProducts" />
+    </AssociationSet>
+    <AssociationSet Name="IngredientProductProduct" Association="IvAnjaModel.Store.IngredientProductProduct">
+      <End Role="IngredientProduct" EntitySet="IngredientProducts" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Ingredients">
     <Key>
@@ -15,12 +25,63 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Price" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="IngredientProducts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IngredientId" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="Product_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="IngredientIngredientProduct">
+    <End Role="Ingredient" Type="IvAnjaModel.Store.Ingredients" Multiplicity="1" />
+    <End Role="IngredientProduct" Type="IvAnjaModel.Store.IngredientProducts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ingredient">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="IngredientProduct">
+        <PropertyRef Name="IngredientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="IngredientProductProduct">
+    <End Role="IngredientProduct" Type="IvAnjaModel.Store.IngredientProducts" Multiplicity="*" />
+    <End Role="Product" Type="IvAnjaModel.Store.Products" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="IngredientProduct">
+        <PropertyRef Name="Product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="IvAnjaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="IvAnjaEntities" annotation:LazyLoadingEnabled="true" >
           <EntitySet Name="Ingredients" EntityType="IvAnjaModel.Ingredient" />
+          <EntitySet Name="Products" EntityType="IvAnjaModel.Product" />
+          <EntitySet Name="IngredientProducts" EntityType="IvAnjaModel.IngredientProduct" />
+          <AssociationSet Name="IngredientIngredientProduct" Association="IvAnjaModel.IngredientIngredientProduct">
+            <End Role="Ingredient" EntitySet="Ingredients" />
+            <End Role="IngredientProduct" EntitySet="IngredientProducts" />
+          </AssociationSet>
+          <AssociationSet Name="IngredientProductProduct" Association="IvAnjaModel.IngredientProductProduct">
+            <End Role="IngredientProduct" EntitySet="IngredientProducts" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Ingredient">
           <Key>
@@ -28,7 +89,43 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="IngredientProducts" Relationship="IvAnjaModel.IngredientIngredientProduct" FromRole="Ingredient" ToRole="IngredientProduct" />
         </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Price" Type="String" Nullable="false" />
+          <NavigationProperty Name="IngredientProducts" Relationship="IvAnjaModel.IngredientProductProduct" FromRole="Product" ToRole="IngredientProduct" />
+        </EntityType>
+        <EntityType Name="IngredientProduct">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Ingredient" Relationship="IvAnjaModel.IngredientIngredientProduct" FromRole="IngredientProduct" ToRole="Ingredient" />
+          <Property Name="IngredientId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="IvAnjaModel.IngredientProductProduct" FromRole="IngredientProduct" ToRole="Product" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="IngredientIngredientProduct">
+          <End Type="IvAnjaModel.Ingredient" Role="Ingredient" Multiplicity="1" />
+          <End Type="IvAnjaModel.IngredientProduct" Role="IngredientProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IngredientProduct">
+              <PropertyRef Name="IngredientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IngredientProductProduct">
+          <End Type="IvAnjaModel.IngredientProduct" Role="IngredientProduct" Multiplicity="*" />
+          <End Type="IvAnjaModel.Product" Role="Product" Multiplicity="1" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -43,6 +140,32 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="IsTypeOf(IvAnjaModel.Product)">
+        <MappingFragment StoreEntitySet="Products">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IngredientProducts">
+      <EntityTypeMapping TypeName="IsTypeOf(IvAnjaModel.IngredientProduct)">
+        <MappingFragment StoreEntitySet="IngredientProducts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="IngredientId" ColumnName="IngredientId" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="IngredientProductProduct" TypeName="IvAnjaModel.IngredientProductProduct" StoreEntitySet="IngredientProducts">
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Product_Id" />
+      </EndProperty>
+      <EndProperty Name="IngredientProduct">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

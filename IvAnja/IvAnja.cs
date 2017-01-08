@@ -76,5 +76,12 @@ namespace IvAnja
             ingredientsBindingSource.ResetBindings(true);
             lbIngredients.Refresh();
         }
+
+        private void brnOpenProducts_Click(object sender, EventArgs e)
+        {
+            frmProducts productsForm = new frmProducts();
+            productsForm.Show();
+  
+        }
     }
 }

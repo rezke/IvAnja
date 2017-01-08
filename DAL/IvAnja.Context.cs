@@ -27,5 +27,7 @@ namespace DAL
         }
     
         public virtual DbSet<Ingredient> Ingredients { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<IngredientProduct> IngredientProducts { get; set; }
     }
 }
